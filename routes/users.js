@@ -7,7 +7,7 @@ router.route('/login')
     .post(validateBody(schemas.authSchema), UserController.login);
 
 router.route('/register')
-    .post(UserController.register);
+    .post(validateBody(schemas.authSchema), UserController.register);
 
 router.route('/secret')
     .get(UserController.secret);
