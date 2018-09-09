@@ -1,4 +1,16 @@
+const JWT  = require('jsonwebtoken');
 const User = require('../model/user');
+const { JWT_SECRETS } = require('../configuration');
+
+signToken = user => {
+    return token = JWT.sign({
+        iss: 'ApiNode',
+        sub: user.id,
+        iat: new Date().getTime(),
+        exp: new Date().setDate(new Date().getDate() + 1)
+    }, JWT_SECRETS );
+};
+
 module.exports = {
     login: async (req, res, next) =>{
         res.status(200).json(req.value.body);
@@ -16,7 +28,9 @@ module.exports = {
         const newUser = new User({ email, password });
         await newUser.save();
 
-        res.json({ user : "Created!" });
+        const token = signToken(newUser);
+
+        res.status(200).json({ token });
     },
     secret: async (req, res, next) => {
         console.log('Secret');
