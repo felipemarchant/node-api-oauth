@@ -13,8 +13,9 @@ signToken = user => {
 
 module.exports = {
     login: async (req, res, next) =>{
-        res.status(200).json(req.value.body);
-        console.log('Login');
+        const token = signToken(req.user);
+        res.status(200).json({ token });
+        console.log('Successful Login');
     },
     register: async (req, res, next) => {
         const { email, password } = req.value.body;
@@ -34,6 +35,7 @@ module.exports = {
     },
     secret: async (req, res, next) => {
         console.log('Secret');
+
         res.json({ secret : 'Secret Resource' });
     }
 }

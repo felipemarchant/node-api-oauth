@@ -6,7 +6,7 @@ const passportConf = require('../passport');
 const UserController = require('../controllers/users');
 
 router.route('/login')
-    .post(validateBody(schemas.authSchema), UserController.login);
+    .post(validateBody(schemas.authSchema), passport.authenticate('local', { session:false }), UserController.login);
 
 router.route('/register')
     .post(validateBody(schemas.authSchema), UserController.register);
